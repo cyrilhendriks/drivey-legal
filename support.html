@@ -10,15 +10,48 @@
   a { color: #6a4dff; }
   .en { color: #5d5566; border-top: 1px solid #ddd; margin-top: 3rem; padding-top: 1rem; }
   dl dt { font-weight: 600; margin-top: 1rem; }
-  footer { margin-top: 3rem; font-size: .85rem; color: #5d5566; }
+  form { margin: 1rem 0 2rem; }
+  label { display: block; font-weight: 600; margin-top: 1rem; }
+  input, textarea { width: 100%; box-sizing: border-box; padding: .6rem .7rem; margin-top: .3rem; border: 1px solid #ccc; border-radius: .5rem; font: inherit; color: inherit; background: #fff; }
+  textarea { min-height: 8rem; resize: vertical; }
+  button { margin-top: 1.2rem; padding: .7rem 1.4rem; border: 0; border-radius: .6rem; background: #6a4dff; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  .hp { position: absolute; left: -9999px; }
+  .status { margin-top: 1rem; font-weight: 600; }
+  .status.ok { color: #1a8a4c; }
+  .status.err { color: #c0392b; }
+  @media (prefers-color-scheme: dark) {
+    body { color: #ece7f2; background: #17131d; }
+    input, textarea { background: #221c28; border-color: #443b4f; color: #ece7f2; }
+    .en { border-color: #443b4f; }
+    a { color: #a892ff; }
+  }
+  footer { margin-top: 3rem; font-size: .85rem; color: #8a8194; }
 </style>
 </head>
 <body>
 <h1>Drivey — Ondersteuning</h1>
 
-<p>Hulp nodig of een vraag over Drivey? Mail gerust — je krijgt persoonlijk antwoord van de ontwikkelaar.</p>
-<p><strong>E-mail:</strong> <a href="mailto:cyril.hendriks@gmail.com">cyril.hendriks@gmail.com</a></p>
-<p>Vermeld bij een probleem kort je toestel (bijv. iPhone-model of Android-toestel), je Homey-type (Homey Pro of Homey Cloud) en wat er misging — dan kan ik je sneller helpen.</p>
+<p>Hulp nodig of een vraag over Drivey? Stuur een bericht via het formulier hieronder — je krijgt persoonlijk antwoord van de ontwikkelaar. Vermeld je toestel (bijv. iPhone-model of Android-toestel) en je Homey-type (Homey Pro of Homey Cloud), dan kan ik je sneller helpen.</p>
+
+<form id="contact" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="9c881d43-6dc5-460c-8130-b88b95976fad">
+  <input type="hidden" name="subject" value="Drivey — support-bericht">
+  <input type="hidden" name="from_name" value="Drivey support">
+  <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+  <label for="name">Naam</label>
+  <input type="text" id="name" name="name" required>
+
+  <label for="email">Je e-mailadres (voor mijn antwoord)</label>
+  <input type="email" id="email" name="email" required>
+
+  <label for="message">Bericht</label>
+  <textarea id="message" name="message" required></textarea>
+
+  <button type="submit">Verstuur</button>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+</form>
 
 <h2>Veelgestelde vragen</h2>
 <dl>
@@ -37,14 +70,43 @@
 
 <div class="en">
 <h2>Support (English)</h2>
-<p>Need help or have a question about Drivey? Just send an email — you'll get a personal reply from the developer.</p>
-<p><strong>Email:</strong> <a href="mailto:cyril.hendriks@gmail.com">cyril.hendriks@gmail.com</a></p>
-<p>When reporting a problem, please mention your device (e.g. iPhone model or Android device), your Homey type (Homey Pro or Homey Cloud) and what went wrong, so I can help you faster.</p>
+<p>Need help or have a question about Drivey? Send a message using the form above — you'll get a personal reply from the developer. Please mention your device (e.g. iPhone model or Android device) and your Homey type (Homey Pro or Homey Cloud) so I can help you faster.</p>
 <p>Requirements: a Homey (Homey Pro or Homey Cloud) and your existing Homey account. Trip and location triggers require the free Drivey Companion app on your Homey. CarPlay support is enabled once Apple approves the request. Drivey collects no personal data — see the <a href="./">privacy &amp; legal page</a>.</p>
 </div>
 
 <footer>
 <p>© 2026 Cyril Hendriks</p>
 </footer>
+
+<script>
+  const form = document.getElementById('contact');
+  const status = document.getElementById('status');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    status.className = 'status';
+    status.textContent = 'Versturen…';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        form.reset();
+        status.className = 'status ok';
+        status.textContent = 'Bedankt! Je bericht is verstuurd — ik reageer zo snel mogelijk.';
+      } else {
+        throw new Error(data.message || 'mislukt');
+      }
+    } catch (err) {
+      status.className = 'status err';
+      status.textContent = 'Er ging iets mis. Mail gerust rechtstreeks als het blijft haperen.';
+      btn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
