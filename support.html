@@ -4,32 +4,159 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Drivie — Ondersteuning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
-  body { font-family: -apple-system, system-ui, sans-serif; max-width: 42rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #221c28; }
-  h1, h2 { line-height: 1.25; }
-  a { color: #6a4dff; }
-  .en { color: #5d5566; border-top: 1px solid #ddd; margin-top: 3rem; padding-top: 1rem; }
-  dl dt { font-weight: 600; margin-top: 1rem; }
-  form { margin: 1rem 0 2rem; }
-  label { display: block; font-weight: 600; margin-top: 1rem; }
-  input, textarea { width: 100%; box-sizing: border-box; padding: .6rem .7rem; margin-top: .3rem; border: 1px solid #ccc; border-radius: .5rem; font: inherit; color: inherit; background: #fff; }
-  textarea { min-height: 8rem; resize: vertical; }
-  button { margin-top: 1.2rem; padding: .7rem 1.4rem; border: 0; border-radius: .6rem; background: #6a4dff; color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
-  button:disabled { opacity: .5; cursor: default; }
-  .hp { position: absolute; left: -9999px; }
-  .status { margin-top: 1rem; font-weight: 600; }
-  .status.ok { color: #1a8a4c; }
-  .status.err { color: #c0392b; }
-  @media (prefers-color-scheme: dark) {
-    body { color: #ece7f2; background: #17131d; }
-    input, textarea { background: #221c28; border-color: #443b4f; color: #ece7f2; }
-    .en { border-color: #443b4f; }
-    a { color: #a892ff; }
+  :root {
+    --bg: #0a0a0c;
+    --text: #ece7f2;
+    --text-muted: #8a8194;
+    --accent: #7B4DFF;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.08);
   }
-  footer { margin-top: 3rem; font-size: .85rem; color: #8a8194; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+    font-weight: 300;
+  }
+  .background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float 10s infinite alternate ease-in-out;
+  }
+  .blob-1 {
+    width: 400px; height: 400px;
+    background: #7B4DFF;
+    top: -100px; left: -100px;
+  }
+  .blob-2 {
+    width: 500px; height: 500px;
+    background: #4D88FF;
+    bottom: -200px; right: -100px;
+    animation-duration: 15s;
+  }
+  .blob-3 {
+    width: 300px; height: 300px;
+    background: #FF4D88;
+    top: 40%; left: 60%;
+    animation-duration: 12s;
+    opacity: 0.2;
+  }
+  @keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+  }
+  .container {
+    max-width: 48rem;
+    margin: 4rem auto;
+    padding: 3rem 4rem;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 32px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  }
+  h1, h2, h3 { font-weight: 400; line-height: 1.2; margin-top: 2.5rem; }
+  h1 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    background: linear-gradient(135deg, #7B4DFF, #FF4D88, #4D88FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+  }
+  h2 { font-size: 1.5rem; color: #fff; }
+  a { color: #a892ff; text-decoration: none; transition: color 0.2s; }
+  a:hover { color: #fff; }
+  .en {
+    color: var(--text-muted);
+    border-top: 1px solid var(--glass-border);
+    margin-top: 4rem;
+    padding-top: 2rem;
+  }
+  footer {
+    margin-top: 4rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  
+  /* Support specific */
+  dl dt { font-weight: 400; color: #fff; margin-top: 1.5rem; font-size: 1.1rem; }
+  dl dd { margin-left: 0; margin-top: 0.5rem; color: var(--text-muted); }
+  form { margin: 2rem 0; }
+  label { display: block; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+  input, textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(123, 77, 255, 0.2);
+  }
+  textarea { min-height: 150px; resize: vertical; }
+  button {
+    margin-top: 2rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg, #7B4DFF, #4D88FF);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  }
+  button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(123, 77, 255, 0.3);
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .hp { position: absolute; left: -9999px; }
+  .status { margin-top: 1.5rem; font-weight: 400; }
+  .status.ok { color: #4ade80; }
+  .status.err { color: #f87171; }
+  
+  @media (max-width: 768px) {
+    .container { margin: 1rem; padding: 2rem; border-radius: 20px; }
+    h1 { font-size: 2rem; }
+  }
 </style>
 </head>
 <body>
+<div class="background">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+<div class="container">
 <h1>Drivie — Ondersteuning</h1>
 
 <p>Hulp nodig of een vraag over Drivie? Stuur een bericht via het formulier hieronder — je krijgt persoonlijk antwoord van de ontwikkelaar. Vermeld je toestel (bijv. iPhone-model of Android-toestel) en je Homey-type (Homey Pro of Homey Cloud), dan kan ik je sneller helpen.</p>
@@ -78,6 +205,7 @@
 <p>© 2026 Cyril Hendriks</p>
 </footer>
 
+</div>
 <script>
   const form = document.getElementById('contact');
   const status = document.getElementById('status');
