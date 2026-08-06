@@ -79,6 +79,20 @@
 </footer>
 
 <script>
+  // Apps link here with ?prefill=<technische samenvatting> (device/app
+  // versies, rechten aan/uit) zodat een support-vraag meteen met genoeg
+  // context binnenkomt om te debuggen, zonder dat de gebruiker het zelf
+  // moet overtypen. Cursor gaat vooraan staan: de vraag komt boven de
+  // samenvatting, niet ertussen.
+  const prefill = new URLSearchParams(location.search).get('prefill');
+  if (prefill) {
+    const message = document.getElementById('message');
+    message.value = '\n\n---\n' + prefill;
+    message.focus();
+    message.setSelectionRange(0, 0);
+    message.scrollTop = 0;
+  }
+
   const form = document.getElementById('contact');
   const status = document.getElementById('status');
   form.addEventListener('submit', async (e) => {
