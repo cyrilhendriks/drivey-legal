@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Drivie — Ondersteuning</title>
+<title>Drivie — Support</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
@@ -84,6 +84,7 @@
     margin-bottom: 2rem;
   }
   h2 { font-size: 1.5rem; color: #fff; }
+  h3 { font-size: 1.15rem; color: #fff; margin-top: 2rem; }
   a { color: #a892ff; text-decoration: none; transition: color 0.2s; }
   a:hover { color: #fff; }
   .en {
@@ -157,49 +158,114 @@
   <div class="blob blob-3"></div>
 </div>
 <div class="container">
-<h1>Drivie — Ondersteuning</h1>
+<h1>Drivie — Support</h1>
 
-<p>Hulp nodig of een vraag over Drivie? Stuur een bericht via het formulier hieronder — je krijgt persoonlijk antwoord van de ontwikkelaar. Vermeld je toestel (bijv. iPhone-model of Android-toestel) en je Homey-type (Homey Pro of Homey Cloud), dan kan ik je sneller helpen.</p>
+<p>Need help or have a question about Drivie? Send a message using the form below. Please mention your device (e.g. iPhone model or Android device) and your Homey type (Homey Pro or Homey Cloud) so I can help you faster.</p>
 
 <form id="contact" action="https://api.web3forms.com/submit" method="POST">
   <input type="hidden" name="access_key" value="9c881d43-6dc5-460c-8130-b88b95976fad">
-  <input type="hidden" name="subject" value="Drivie — support-bericht">
+  <input type="hidden" name="subject" value="Drivie — support message">
   <input type="hidden" name="from_name" value="Drivie support">
   <input type="text" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
 
-  <label for="name">Naam</label>
+  <label for="name">Name</label>
   <input type="text" id="name" name="name" required>
 
-  <label for="email">Je e-mailadres (voor mijn antwoord)</label>
+  <label for="email">Your email address (so I can reply)</label>
   <input type="email" id="email" name="email" required>
 
-  <label for="message">Bericht</label>
+  <label for="message">Message</label>
   <textarea id="message" name="message" required></textarea>
 
-  <button type="submit">Verstuur</button>
+  <button type="submit">Send</button>
   <p class="status" id="status" role="status" aria-live="polite"></p>
 </form>
 
-<h2>Veelgestelde vragen</h2>
+<h2>Frequently Asked Questions</h2>
 <dl>
-  <dt>Wat heb ik nodig om Drivie te gebruiken?</dt>
-  <dd>Een Homey (Homey Pro of Homey Cloud) en je bestaande Homey-account. Je logt in de app in met dat account.</dd>
+  <dt>What do I need to use Drivie?</dt>
+  <dd>A Homey (Homey Pro or Homey Cloud) and your existing Homey account. You log in to the app with that account.</dd>
 
-  <dt>Hoe werken de rit- en locatietriggers?</dt>
-  <dd>Installeer de gratis Drivie Companion-app op je Homey (via de Homey App Store). Daarna kunnen je flows reageren op het starten van een rit en op aankomen bij of vertrekken van een locatie.</dd>
+  <dt>How do the trip and location triggers work?</dt>
+  <dd>Install the free Drivie Companion app on your Homey (via the Homey App Store). Once set up, your flows can react to starting a drive, or arriving at and leaving a location.</dd>
 
-  <dt>Werkt CarPlay?</dt>
-  <dd>Ja — verbind je iPhone met CarPlay en je favorieten verschijnen op het autoscherm. Je flows kunnen er via de companion-app zelfs notificaties tonen.</dd>
+  <dt>Do Apple CarPlay and Android Auto work?</dt>
+  <dd>Yes. Drivie is an approved CarPlay app on iOS and an Android Auto app (IOT category) on Android — connect your phone to your car and your favourite devices, flows and moods appear on the car screen, with a confirmation prompt before anything risky (locks, garage doors, the alarm). On iOS there's also a Home Screen/StandBy widget you can add to CarPlay. See the dedicated <a href="#carplay">CarPlay</a> and <a href="#android-auto">Android Auto</a> sections below if something isn't working as expected.</dd>
 
-  <dt>Waar staan mijn gegevens?</dt>
-  <dd>Drivie verzamelt geen persoonsgegevens. Zie de <a href="./">privacy- en juridische pagina</a> voor details.</dd>
+  <dt>My location flows (arrive/leave) are not triggering. How do I fix this?</dt>
+  <dd>
+    First, ensure the Drivie Companion app is installed on your Homey and your phone is configured there.
+    <br><br><strong>iOS:</strong> Go to the <em>Settings app &gt; Drivie</em>. Ensure <strong>Location</strong> is set to <strong>'Always'</strong>. Without 'Always', iOS won't wake the app in the background when crossing a geofence. Also check that 'Background App Refresh' is enabled.
+    <br><br><strong>Android:</strong> Go to <em>Settings &gt; Apps &gt; Drivie &gt; Permissions</em>. Ensure Location access is set to <strong>'Allow all the time'</strong>. Then go to <em>Settings &gt; Apps &gt; Drivie &gt; Battery</em> and select <strong>'Unrestricted'</strong>. Otherwise, Android might kill the background process to save battery, causing missed triggers.
+  </dd>
+
+  <dt>My car is not recognized (trip started flows are not working).</dt>
+  <dd>
+    Drivie detects car trips natively through your car's projection system (Apple CarPlay or Android Auto). It does not use GPS motion tracking or Bluetooth, so there are no extra permissions to grant.
+    <br><br><strong>iOS:</strong> A trip starts the moment your iPhone connects to CarPlay (wired or wireless). Make sure your phone is actually starting a CarPlay session on your dashboard screen.
+    <br><br><strong>Android:</strong> A trip starts when your phone connects to Android Auto. Check that Android Auto is active on your car's display.
+    <br><br>If the car screen is active but Drivie doesn't register the trip, try opening the Drivie app on your phone once so it can initialize its car connection monitor.
+  </dd>
+
+  <dt>Where is my data stored?</dt>
+  <dd>Drivie does not collect personal data and shares nothing with third parties. See the <a href="./">privacy &amp; legal page</a> for details.</dd>
+
+  <dt>Why does Drivie ask me to confirm before locking/unlocking, or opening the garage, from the car?</dt>
+  <dd>For your safety, Drivie always shows a confirmation prompt before controlling a lock, garage door or the alarm — on both CarPlay and Android Auto. This is intentional and can't be turned off.</dd>
 </dl>
 
-<div class="en">
-<h2>Support (English)</h2>
-<p>Need help or have a question about Drivie? Send a message using the form above — you'll get a personal reply from the developer. Please mention your device (e.g. iPhone model or Android device) and your Homey type (Homey Pro or Homey Cloud) so I can help you faster.</p>
-<p>Requirements: a Homey (Homey Pro or Homey Cloud) and your existing Homey account. Trip and location triggers require the free Drivie Companion app on your Homey. CarPlay works out of the box: connect your iPhone and your favourites appear on the car screen. Drivie collects no personal data — see the <a href="./">privacy &amp; legal page</a>.</p>
-</div>
+<h3 id="carplay">CarPlay</h3>
+<dl>
+  <dt>Drivie doesn't appear as an app in CarPlay.</dt>
+  <dd>
+    Make sure your iPhone is actually connected to CarPlay (cable or wireless) and that your car supports it.
+    <br><br>On your iPhone, go to <em>Settings &gt; General &gt; CarPlay &gt; [your car]</em> and check that Drivie is turned on — cars can hide individual apps from the CarPlay screen.
+    <br><br>Open Drivie on your iPhone at least once before connecting, so it can load your Homey and your favourites.
+  </dd>
+
+  <dt>CarPlay shows "Subscription required", or the tabs are empty.</dt>
+  <dd>
+    <strong>"Subscription required":</strong> open Drivie on your iPhone and make sure you have an active subscription — this can't be set up from the car screen.
+    <br><br><strong>Empty tabs / "No favourites yet":</strong> open Drivie on your iPhone and choose which devices, flows and moods should appear in each CarPlay tab. Only a handful per tab are shown by design, to keep the car screen quick to scan while driving.
+  </dd>
+
+  <dt>I can't find the Drivie widget on my CarPlay Home Screen.</dt>
+  <dd>
+    Unlike the CarPlay app itself, widgets aren't added automatically. On your car's CarPlay Home Screen, tap <strong>Customize</strong> (or press and hold, depending on your car), then add the Drivie widget — the same way you'd add a widget to your iPhone's Home Screen or Lock Screen.
+    <br><br>The widget shows the location you last arrived at, and the status of any devices you've chosen to show for that location. It stays empty until you've set that up for a location in Drivie's Live Activity settings.
+  </dd>
+
+  <dt>The buttons on the CarPlay widget or the status card don't do anything.</dt>
+  <dd>This is expected, not a bug — Apple doesn't allow interactive buttons on CarPlay widgets or Live Activities, only informational status. To actually control something from your car, use the full Drivie app in CarPlay's app grid instead.</dd>
+
+  <dt>The information on my CarPlay screen looks out of date.</dt>
+  <dd>If Drivie can't reach your Homey, it shows the last known status instead of nothing, which can lag behind reality until the connection is restored. Check that your Homey is online and that your iPhone has an internet or mobile-data connection.</dd>
+</dl>
+
+<h3 id="android-auto">Android Auto</h3>
+<dl>
+  <dt>Drivie doesn't appear in Android Auto.</dt>
+  <dd>
+    Make sure the Android Auto app itself is up to date (via Google Play), your phone is connected to your car (cable or wireless), and Android Auto is already set up for that car.
+    <br><br>Smart-home apps like Drivie show up in Android Auto's app launcher rather than as a dashboard tile — check there first if you don't see it right away.
+    <br><br>If you just installed or updated Drivie, disconnecting and reconnecting (or restarting Android Auto) sometimes helps it register.
+  </dd>
+
+  <dt>Android Auto shows "Log in on your phone" or "No favourites yet".</dt>
+  <dd>
+    <strong>"Log in on your phone":</strong> open Drivie on your phone, sign in, then reconnect to your car.
+    <br><br><strong>"No favourites yet":</strong> open Drivie on your phone and choose which devices, flows and moods should show up in the car.
+  </dd>
+
+  <dt>Android Auto shows "Subscription required".</dt>
+  <dd>Open Drivie on your phone and check that you have an active subscription — this can't be set up from the car screen.</dd>
+
+  <dt>I only see simple on/off buttons in the car, not full control.</dt>
+  <dd>While driving, Android Auto (and CarPlay) intentionally limit you to quick, low-distraction actions — turning something on/off, picking a mood, or a confirmed action for locks, alarms and garage doors. This follows Google's and Apple's own guidelines for reducing driver distraction. For fine adjustments, use the Drivie app on your phone.</dd>
+
+  <dt>The information on my Android Auto screen looks out of date.</dt>
+  <dd>Same cause as on CarPlay — Drivie needs to reach your Homey to show live status. If your Homey or phone loses its connection, the car screen shows the last known state until it's restored. Check that both are online.</dd>
+</dl>
 
 <footer>
 <p>© 2026 Cyril Hendriks</p>
@@ -228,7 +294,7 @@
     const btn = form.querySelector('button');
     btn.disabled = true;
     status.className = 'status';
-    status.textContent = 'Versturen…';
+    status.textContent = 'Sending…';
     try {
       const res = await fetch(form.action, {
         method: 'POST',
@@ -239,13 +305,13 @@
       if (res.ok && data.success) {
         form.reset();
         status.className = 'status ok';
-        status.textContent = 'Bedankt! Je bericht is verstuurd — ik reageer zo snel mogelijk.';
+        status.textContent = 'Thanks! Your message has been sent — I\'ll reply as soon as I can.';
       } else {
-        throw new Error(data.message || 'mislukt');
+        throw new Error(data.message || 'failed');
       }
     } catch (err) {
       status.className = 'status err';
-      status.textContent = 'Er ging iets mis. Mail gerust rechtstreeks als het blijft haperen.';
+      status.textContent = 'Something went wrong. Feel free to email directly if this keeps happening.';
       btn.disabled = false;
     }
   });
