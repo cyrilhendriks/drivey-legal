@@ -162,6 +162,8 @@
 
 <p>Need help or have a question about Drivie? Send a message using the form below. Please mention your device (e.g. iPhone model or Android device) and your Homey type (Homey Pro or Homey Cloud) so I can help you faster.</p>
 
+<p><strong>Tip:</strong> if your Homey has the Drivie Companion app installed, the fastest way to reach me is actually from there — open the Companion's settings on your Homey and use <em>"Send with diagnostics"</em>. It automatically attaches the technical logs I'd otherwise have to ask you for, so trip and connection issues in particular can often be solved in one reply instead of a back-and-forth. That flow can't email you back directly, so still use the form below if you need an answer.</p>
+
 <form id="contact" action="https://api.web3forms.com/submit" method="POST">
   <input type="hidden" name="access_key" value="9c881d43-6dc5-460c-8130-b88b95976fad">
   <input type="hidden" name="subject" value="Drivie — support message">
@@ -181,8 +183,14 @@
   <p class="status" id="status" role="status" aria-live="polite"></p>
 </form>
 
-<h2>Frequently Asked Questions</h2>
+<h2 id="faq">Frequently Asked Questions</h2>
 <dl>
+  <dt>Why do widgets, Live Activities, or a car trip's start/end sometimes update late — or not at all?</dt>
+  <dd>
+    The Home Screen widget, the Lock Screen/CarPlay Live Activity, and detecting when a car trip starts or ends all depend on a background notification being delivered to your phone at the right moment. Apple and Google — not Drivie — decide, at the operating-system level, when your phone actually processes that notification: usually it's within seconds, but the system can delay it by several minutes, or skip it entirely to save battery, especially once your phone has been sitting still for a while (e.g. right after you park).
+    <br><br>This is normal iOS/Android behaviour, not something any app can force. A widget or Live Activity that looks a little out of date corrects itself the next time your phone processes an update — opening Drivie also forces an immediate refresh. A car trip's <em>end</em> time is always backdated to when the car actually disconnected, even if your phone only noticed later, so your ride log stays accurate even when the notification was delayed.
+  </dd>
+
   <dt>What do I need to use Drivie?</dt>
   <dd>A Homey (Homey Pro or Homey Cloud) and your existing Homey account. You log in to the app with that account.</dd>
 
@@ -205,6 +213,12 @@
     <br><br><strong>iOS:</strong> A trip starts the moment your iPhone connects to CarPlay (wired or wireless). Make sure your phone is actually starting a CarPlay session on your dashboard screen.
     <br><br><strong>Android:</strong> A trip starts when your phone connects to Android Auto. Check that Android Auto is active on your car's display.
     <br><br>If the car screen is active but Drivie doesn't register the trip, try opening the Drivie app on your phone once so it can initialize its car connection monitor.
+  </dd>
+
+  <dt>My trip ended much later than it actually did (or the car still shows "connected" after I parked).</dt>
+  <dd>
+    Trip start is near-instant because connecting to CarPlay/Android Auto is something the phone notices immediately. Trip <em>end</em> is different: once you park and the phone stops moving, iOS and Android are free to put Drivie's background process to sleep — that's the same operating-system behaviour explained at the <a href="#faq">top of this page</a> — so the disconnect is sometimes only noticed several minutes later, whenever your phone next wakes the app up.
+    <br><br>The end time itself is always corrected to the moment the car actually disconnected, not to the moment it was noticed, so your ride log and any Homey flows that read the trip's duration stay accurate. It's only the <em>notification</em> to your Homey that can lag — the car will show "connected" a little longer than it should, then catch up.
   </dd>
 
   <dt>Where is my data stored?</dt>
@@ -239,7 +253,7 @@
   <dd>This is expected, not a bug — Apple doesn't allow interactive buttons on CarPlay widgets or Live Activities, only informational status. To actually control something from your car, use the full Drivie app in CarPlay's app grid instead.</dd>
 
   <dt>The information on my CarPlay screen looks out of date.</dt>
-  <dd>If Drivie can't reach your Homey, it shows the last known status instead of nothing, which can lag behind reality until the connection is restored. Check that your Homey is online and that your iPhone has an internet or mobile-data connection.</dd>
+  <dd>Usually this is the notification-delivery timing explained at the <a href="#faq">top of this page</a> — it corrects itself shortly, or immediately if you open Drivie on your iPhone. If it stays wrong for a while, check that your Homey is online and your iPhone has an internet or mobile-data connection; if Drivie can't reach your Homey at all, it shows the last known status instead of nothing.</dd>
 </dl>
 
 <h3 id="android-auto">Android Auto</h3>
@@ -264,7 +278,7 @@
   <dd>While driving, Android Auto (and CarPlay) intentionally limit you to quick, low-distraction actions — turning something on/off, picking a mood, or a confirmed action for locks, alarms and garage doors. This follows Google's and Apple's own guidelines for reducing driver distraction. For fine adjustments, use the Drivie app on your phone.</dd>
 
   <dt>The information on my Android Auto screen looks out of date.</dt>
-  <dd>Same cause as on CarPlay — Drivie needs to reach your Homey to show live status. If your Homey or phone loses its connection, the car screen shows the last known state until it's restored. Check that both are online.</dd>
+  <dd>Usually this is the notification-delivery timing explained at the <a href="#faq">top of this page</a> — it corrects itself shortly, or immediately if you open Drivie on your phone. If it stays wrong for a while, check that your Homey and phone are both online; if Drivie can't reach your Homey at all, it shows the last known status instead of nothing.</dd>
 </dl>
 
 <footer>
