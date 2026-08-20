@@ -188,7 +188,7 @@
   <dt>Why do widgets, Live Activities, or a car trip's start/end sometimes update late — or not at all?</dt>
   <dd>
     The Home Screen widget, the Lock Screen/CarPlay Live Activity, and detecting when a car trip starts or ends all depend on a background notification being delivered to your phone at the right moment. Apple and Google — not Drivie — decide, at the operating-system level, when your phone actually processes that notification: usually it's within seconds, but the system can delay it by several minutes, or skip it entirely to save battery, especially once your phone has been sitting still for a while (e.g. right after you park).
-    <br><br>This is normal iOS/Android behaviour, not something any app can force. A widget or Live Activity that looks a little out of date corrects itself the next time your phone processes an update — opening Drivie also forces an immediate refresh. A car trip's <em>end</em> time is always backdated to when the car actually disconnected, even if your phone only noticed later, so your ride log stays accurate even when the notification was delayed.
+    <br><br>This is normal iOS/Android behaviour, not something any app can force. A widget or Live Activity that looks a little out of date corrects itself the next time your phone processes an update — opening Drivie also forces an immediate refresh. A car trip's <em>end</em> time is always backdated to when the car actually disconnected, even if your phone only noticed later, so your ride log stays accurate even when the notification was delayed. A trip's <em>start</em> is normally near-instant (see below), but it's still subject to the same iOS/Android scheduling — that's why it's never guaranteed to be truly real-time either.
   </dd>
 
   <dt>What do I need to use Drivie?</dt>
@@ -207,17 +207,17 @@
     <br><br><strong>Android:</strong> Go to <em>Settings &gt; Apps &gt; Drivie &gt; Permissions</em>. Ensure Location access is set to <strong>'Allow all the time'</strong>. Then go to <em>Settings &gt; Apps &gt; Drivie &gt; Battery</em> and select <strong>'Unrestricted'</strong>. Otherwise, Android might kill the background process to save battery, causing missed triggers.
   </dd>
 
-  <dt>My car is not recognized (trip started flows are not working).</dt>
+  <dt>My trip isn't starting when I get in the car.</dt>
   <dd>
-    Drivie detects car trips natively through your car's projection system (Apple CarPlay or Android Auto). It does not use GPS motion tracking or Bluetooth, so there are no extra permissions to grant.
-    <br><br><strong>iOS:</strong> A trip starts the moment your iPhone connects to CarPlay (wired or wireless). Make sure your phone is actually starting a CarPlay session on your dashboard screen.
+    Drivie detects car trips natively through your car's projection system (Apple CarPlay or Android Auto) — it does not use GPS or Bluetooth.
+    <br><br><strong>iOS:</strong> A trip starts the moment your iPhone connects to CarPlay (wired or wireless). Make sure your phone is actually starting a CarPlay session on your dashboard screen. If you've granted <strong>Motion &amp; Fitness</strong> access (<em>Settings app &gt; Drivie &gt; Permissions</em>), Drivie also uses that as a backup signal, so a trip can still be caught even if CarPlay never announces the connection at all — for example driving off with the radio off and without opening Drivie on the dashboard screen — this never needs the app to be open.
     <br><br><strong>Android:</strong> A trip starts when your phone connects to Android Auto. Check that Android Auto is active on your car's display.
     <br><br>If the car screen is active but Drivie doesn't register the trip, try opening the Drivie app on your phone once so it can initialize its car connection monitor.
   </dd>
 
   <dt>My trip ended much later than it actually did (or the car still shows "connected" after I parked).</dt>
   <dd>
-    Trip start is near-instant because connecting to CarPlay/Android Auto is something the phone notices immediately. Trip <em>end</em> is different: once you park and the phone stops moving, iOS and Android are free to put Drivie's background process to sleep — that's the same operating-system behaviour explained at the <a href="#faq">top of this page</a> — so the disconnect is sometimes only noticed several minutes later, whenever your phone next wakes the app up.
+    Trip start is normally near-instant, since connecting to CarPlay/Android Auto is something the phone notices immediately — see above for the rarer case where that connection itself is missed or delayed and the Motion &amp; Fitness backup signal has to catch it instead. Trip <em>end</em> is different: once you park and the phone stops moving, iOS and Android are free to put Drivie's background process to sleep — that's the same operating-system behaviour explained at the <a href="#faq">top of this page</a> — so the disconnect is sometimes only noticed several minutes later, whenever your phone next wakes the app up.
     <br><br>The end time itself is always corrected to the moment the car actually disconnected, not to the moment it was noticed, so your ride log and any Homey flows that read the trip's duration stay accurate. It's only the <em>notification</em> to your Homey that can lag — the car will show "connected" a little longer than it should, then catch up.
   </dd>
 
